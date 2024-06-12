@@ -14,11 +14,13 @@ import (
 )
 
 type ContentModel struct {
-	ID         primitive.ObjectID `bson:"_id,omitempty"`
-	Name       string             `bson:"name"`
-	AlbumArt   string             `bson:"album_art"`
-	ContentUrl string             `bson:"content_url"`
-	CategoryID string             `bson:"cateogry_id"`
+	ID          primitive.ObjectID `bson:"_id,omitempty"`
+	Name        string             `bson:"name"`
+	AlbumArtUrl string             `bson:"album_art"`
+	ContentUrl  string             `bson:"content_url"`
+	Artist      string             `bson:"artist"`
+	Description string             `bson:"description"`
+	CategoryID  string             `bson:"cateogry_id"`
 }
 
 type ContentModelService struct {

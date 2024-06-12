@@ -1,6 +1,7 @@
 package services
 
 import (
+	"bhajann/internal"
 	"bhajann/pkg/domain"
 	"bhajann/pkg/repository"
 	"context"
@@ -37,7 +38,7 @@ func (entity *ContentService) Find(
 		response[idx] = domain.ContentDTO{
 			ID:         val.ID,
 			Name:       val.Name,
-			AlbumArt:   val.AlbumArt,
+			AlbumArt:   val.AlbumArtUrl,
 			ContentUrl: val.ContentUrl,
 			CategoryID: val.CategoryID,
 		}
@@ -47,13 +48,16 @@ func (entity *ContentService) Find(
 
 func (entity *ContentService) Add(
 	ctx context.Context,
+	addContent internal.ContentDTO,
 ) (*primitive.ObjectID, error) {
 
 	data := repository.ContentModel{
-		Name:       "Music",
-		AlbumArt:   "http://google.com",
-		ContentUrl: "http://google.com/asdf",
-		CategoryID: "66675bf9c15fcab068782ab8",
+		Name:        addContent.Name,
+		AlbumArtUrl: addContent.AlbumArtUrl,
+		ContentUrl:  addContent.ContentUrl,
+		CategoryID:  addContent.CategoryID,
+		Artist:      addContent.Artist,
+		Description: addContent.Description,
 	}
 
 	insertedID, err := entity.ContentModelService.Insert(

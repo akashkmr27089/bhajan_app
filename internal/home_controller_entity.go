@@ -10,11 +10,30 @@ import (
 type ContentDTO struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
-	AlbumArt    string `json:"album_art_url"`
+	AlbumArtUrl string `json:"album_art_url"`
 	ContentUrl  string `json:"url"`
 	Artist      string `json:"artist"`
 	Description string `json:"description"`
 	CategoryID  string `json:"cateogry_id"`
+}
+
+func (entity *ContentDTO) Populate(
+	ctx context.Context,
+	body io.ReadCloser,
+) error {
+	decoder := json.NewDecoder(body)
+	err := decoder.Decode(entity)
+	if err != nil {
+		return err
+	}
+
+	// todo: Yet to Implement
+	// err = validate.Struct(entity)
+	// if err != nil {
+	// 	logger.Client.WithFields(logger.GetFailedEvent()).Error(err.Error())
+	// 	return cerror.ValidationError(cerror.InvalidRequestMsg)
+	// }
+	return nil
 }
 
 type CategoryDTO struct {
@@ -71,9 +90,9 @@ func (entity *HomeScreenApiResponseDTO) ToDTO(
 		contentDatas[idx] = ContentDTO{
 			ID:          content.ID.Hex(),
 			Name:        content.Name,
-			AlbumArt:    content.AlbumArt,
+			AlbumArtUrl: content.AlbumArt,
 			ContentUrl:  content.ContentUrl,
-			CategoryID:  content.ContentUrl,
+			CategoryID:  content.CategoryID,
 			Artist:      content.Artist,
 			Description: content.Description,
 		}

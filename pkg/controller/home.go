@@ -93,9 +93,19 @@ func (entity HomeController) AddContent(
 	r *http.Request,
 ) {
 	ctx := r.Context()
+	var addContentDTO internal.ContentDTO
+	err := addContentDTO.Populate(
+		ctx,
+		r.Body,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	data, err := entity.ContentService.Add(
 		ctx,
+		addContentDTO,
 	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
