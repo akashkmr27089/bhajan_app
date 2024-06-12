@@ -12,16 +12,18 @@ const (
 )
 
 type CategoryDTO struct {
-	ID       primitive.ObjectID `json:"id"`
-	Name     string             `json:"name"`
-	AlbumArt string             `json:"album_art"`
-	State    State              `json:"state"`
+	ID       primitive.ObjectID
+	Name     string
+	AlbumArt string
+	State    State
 }
 
 type ContentDTO struct {
-	ID         primitive.ObjectID `json:"_id"`
-	Name       string             `json:"name"`
-	AlbumArt   string             `json:"album_art"`
-	ContentUrl string             `json:"content_url"`
-	CategoryID string             `json:"cateogry_id"`
+	ID          primitive.ObjectID
+	Name        string
+	AlbumArt    string
+	ContentUrl  string
+	CategoryID  string
+	Artist      string
+	Description string
 }

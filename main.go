@@ -49,6 +49,8 @@ func main() {
 	router.HandleFunc("/content/list", homeController.ListContent).Methods("GET")
 	router.HandleFunc("/content", homeController.AddContent).Methods("POST")
 
+	router.HandleFunc("/home", homeController.HomePageApi).Methods("GET")
+
 	// router.HandleFunc("/content/list", homeController.GetContentList).Methods("GET")
 	// router.HandleFunc("/content/{id}/meta", homeController.AddContentList).Methods("POST")
 

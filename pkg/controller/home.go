@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"bhajann/internal"
+	"bhajann/pkg/domain"
 	"bhajann/pkg/services"
 
 	"encoding/json"
@@ -44,9 +46,19 @@ func (entity HomeController) AddCategories(
 	r *http.Request,
 ) {
 	ctx := r.Context()
+	var addCategorieDTO internal.CategoryDTO
+	err := addCategorieDTO.Populate(
+		ctx,
+		r.Body,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	data, err := entity.CategoryService.Add(
 		ctx,
+		addCategorieDTO,
 	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -58,12 +70,15 @@ func (entity HomeController) AddCategories(
 
 func (entity HomeController) ListContent(
 	w http.ResponseWriter,
-	r *http.Request,
+	request *http.Request,
 ) {
-	ctx := r.Context()
+	ctx := request.Context()
+	queryParams := request.URL.Query()
+	pagingDTO := domain.GetPagingDTO(queryParams, 10)
 
 	data, err := entity.ContentService.Find(
 		ctx,
+		pagingDTO,
 	)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -88,4 +103,35 @@ func (entity HomeController) AddContent(
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(data)
+}
+
+func (entity HomeController) HomePageApi(
+	w http.ResponseWriter,
+	request *http.Request,
+) {
+	ctx := request.Context()
+	queryParams := request.URL.Query()
+	pagingDTO := domain.GetPagingDTO(queryParams, 4)
+
+	categoryDTOS, err := entity.CategoryService.Find(
+		ctx,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	contentDTOS, err := entity.ContentService.Find(
+		ctx,
+		pagingDTO,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	// Combine Category and Content
+	var response internal.HomeScreenApiResponseDTO
+	response.ToDTO(categoryDTOS, contentDTOS)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }

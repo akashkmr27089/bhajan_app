@@ -22,12 +22,11 @@ func NewContentService(
 
 func (entity *ContentService) Find(
 	ctx context.Context,
+	pagingDTO domain.PagingPointer,
 ) ([]domain.ContentDTO, error) {
 	contentModelDTOS, err := entity.ContentModelService.Find(
 		ctx,
-		domain.PagingPointer{
-			Limit: 0,
-		},
+		pagingDTO,
 	)
 	if err != nil {
 		return nil, err

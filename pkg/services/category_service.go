@@ -1,6 +1,7 @@
 package services
 
 import (
+	"bhajann/internal"
 	"bhajann/pkg/domain"
 	"bhajann/pkg/repository"
 	"context"
@@ -45,15 +46,16 @@ func (entity *CategoryService) Find(
 
 func (entity *CategoryService) Add(
 	ctx context.Context,
+	addCategorieDTO internal.CategoryDTO,
 ) (*primitive.ObjectID, error) {
 
 	data := repository.CategoryModel{
-		Name:     "Aakash2",
-		AlbumArt: "asdf",
-		State:    domain.ActiveState,
+		Name:     addCategorieDTO.Name,
+		AlbumArt: addCategorieDTO.AlbumArt,
+		State:    addCategorieDTO.State,
 	}
 
-	insertedID, err := entity.CategoryServiceModel.InserVal(
+	insertedID, err := entity.CategoryServiceModel.Insert(
 		ctx,
 		data,
 	)

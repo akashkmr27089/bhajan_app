@@ -86,7 +86,7 @@ func (model *CategoryModelService) Find(
 	return results, nil
 }
 
-func (model *CategoryModelService) InserVal(
+func (model *CategoryModelService) Insert(
 	ctx context.Context,
 	categoryModel CategoryModel,
 ) (*primitive.ObjectID, error) {
