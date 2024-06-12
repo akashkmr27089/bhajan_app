@@ -36,11 +36,13 @@ func (entity *ContentService) Find(
 	response := make([]domain.ContentDTO, len(contentModelDTOS))
 	for idx, val := range contentModelDTOS {
 		response[idx] = domain.ContentDTO{
-			ID:         val.ID,
-			Name:       val.Name,
-			AlbumArt:   val.AlbumArtUrl,
-			ContentUrl: val.ContentUrl,
-			CategoryID: val.CategoryID,
+			ID:          val.ID,
+			Name:        val.Name,
+			AlbumArt:    val.AlbumArtUrl,
+			ContentUrl:  val.ContentUrl,
+			CategoryID:  val.CategoryID,
+			Artist:      val.Artist,
+			Description: val.Description,
 		}
 	}
 	return response, nil

@@ -18,7 +18,7 @@ func GetPagingDTO(
 		limit := queryParams["limit"][0]
 		if limit != "" {
 			val, err := strconv.Atoi(limit)
-			if err != nil {
+			if err == nil {
 				response.Limit = val
 			}
 		}
