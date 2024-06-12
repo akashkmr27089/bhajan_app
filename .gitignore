@@ -7,7 +7,7 @@
 *.dll
 *.so
 *.dylib
-bhajann
+.bhajann
 
 # Test binary, built with `go test -c`
 *.test

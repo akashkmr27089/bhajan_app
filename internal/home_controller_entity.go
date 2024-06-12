@@ -63,7 +63,7 @@ func (entity *CategoryDTO) Populate(
 }
 
 type HomeScreenApiDTO struct {
-	Category   []CategoryDTO `json:"category"`
+	Category   []CategoryDTO `json:"categories"`
 	ContentDTO []ContentDTO  `json:"songs"`
 }
 
