@@ -23,10 +23,15 @@ func NewContentService(
 
 func (entity *ContentService) Find(
 	ctx context.Context,
+	search string,
 	pagingDTO domain.PagingPointer,
 ) ([]domain.ContentDTO, error) {
+	filter := internal.ContentFilter{
+		NameSearch: search,
+	}
 	contentModelDTOS, err := entity.ContentModelService.Find(
 		ctx,
+		filter,
 		pagingDTO,
 	)
 	if err != nil {

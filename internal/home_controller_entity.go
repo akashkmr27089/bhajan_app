@@ -102,3 +102,7 @@ func (entity *HomeScreenApiResponseDTO) ToDTO(
 		ContentDTO: contentDatas,
 	}
 }
+
+type ContentFilter struct {
+	NameSearch string
+}

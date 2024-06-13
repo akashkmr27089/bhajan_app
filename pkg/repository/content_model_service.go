@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"bhajann/internal"
 	"bhajann/pkg/config"
 	"bhajann/pkg/domain"
 	"bhajann/pkg/repository/constants"
@@ -44,10 +45,19 @@ func (model *ContentModelService) GetCollection() *mongo.Collection {
 
 func (model *ContentModelService) Find(
 	ctx context.Context,
+	filter internal.ContentFilter,
 	pagingDTO domain.PagingPointer,
 ) ([]ContentModel, error) {
 	filterQuery := bson.M{}
 	findOptions := options.Find()
+
+	if filter.NameSearch != "" {
+		filterQuery["name"] = primitive.Regex{
+			Pattern: filter.NameSearch,
+			Options: "i",
+		}
+	}
+
 	findOptions.SetMaxTime(1 * time.Second)
 
 	if pagingDTO.LastID != nil {

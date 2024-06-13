@@ -78,6 +78,7 @@ func (entity HomeController) ListContent(
 
 	data, err := entity.ContentService.Find(
 		ctx,
+		"",
 		pagingDTO,
 	)
 	if err != nil {
@@ -122,6 +123,10 @@ func (entity HomeController) HomePageApi(
 	ctx := request.Context()
 	queryParams := request.URL.Query()
 	pagingDTO := domain.GetPagingDTO(queryParams, 4)
+	var serachParam string
+	if len(queryParams["search"]) > 0 {
+		serachParam = queryParams["search"][0]
+	}
 
 	categoryDTOS, err := entity.CategoryService.Find(
 		ctx,
@@ -132,6 +137,7 @@ func (entity HomeController) HomePageApi(
 
 	contentDTOS, err := entity.ContentService.Find(
 		ctx,
+		serachParam,
 		pagingDTO,
 	)
 	if err != nil {
